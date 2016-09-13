@@ -20,7 +20,6 @@ def login(name = '18072996469',password = '123456'):
 
 
 
-
 if __name__ == "__main__":
     print('test')
     login()
