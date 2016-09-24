@@ -1,23 +1,30 @@
 import os
 import datetime
 
+
+# 从医院的his获取指定日期的所有检查
+# 参数： startdate     开始时间
+#        enddate       结束时间
+def getstudiesfromhis(startdate, enddate):
+    studylist = []  # 检查列表
+    dic = {'AccessionNumber': '123123', 'STUDIESINSTUID': '1.2.840.473.8013.20091018.1075032.906.10142.1'}  # 一次检查
+    return studylist
+
+
+# 从医院的his获取一次检查的图片文件位置
+# 参数：AccessionNumber 一次检查在his中的唯一号
+def getimagesfromhis(accessionnumber):
+    pass
+
+
+# 从医院的his获取一次检查的报告
+# 参数：AccessionNumber 一次检查在his中的唯一号
+def getreportfromhis(accessionnumber):
+    reportdic = {}
+    return reportdic
+
+
 if __name__ == '__main__':
     print(os.listdir(os.getcwd()))
-
-    path = 'F:\浙江钜典影像科技有限公司'
-    childpathlist = os.listdir(path)    #列出目录下的所有文件
-    for str in childpathlist:
-        temppath = path + os.sep +str
-        if os.path.isdir(temppath):  #判断是否目录
-            print('目录:%s'%temppath)
-        elif os.path.isfile(temppath):  #判断是否文件
-            timestamp = os.path.getmtime(temppath) #文件的修改时间的时间戳
-            date = datetime.datetime.fromtimestamp(timestamp)
-            ##判断时间:早于三天前
-            if date < (datetime.datetime.now() - datetime.timedelta(days=3)):
-                pass
-            print(date.strftime('%Y-%m-%d %H:%M:%S'))
-            print('文件:%s'% temppath)
-    # print (os.listdir(path))
 
     pass
