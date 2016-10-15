@@ -26,8 +26,9 @@ STUDYDONEDATE = datetime.datetime.strptime('2015-06-04 00:00:00', '%Y-%m-%d %H:%
 STUDYENDDATE = datetime.datetime.strptime('2015-06-15 00:00:00', '%Y-%m-%d %H:%M:%S')
 
 #获取病人列表
-# 获取报告sql语句
-
+# 获取病人列表的查询语句
+# 获取指定病人的报告的查询语句
+# 获取指定病人的影像路径的查询语句
 
 STUDYLIST = []  # 检查的列表
 STUDYINDEX = 0  # 发送的检查索引
@@ -56,7 +57,7 @@ def selSql(selStr):
     connection.close()
     return sqlresult
 
-# 更新数据库
+# 更新本地数据库
 def updatemysql(sqlstr, values):
     # update_old_salary = (
     #     "UPDATE salaries SET to_date = %s "
