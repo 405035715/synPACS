@@ -16,7 +16,10 @@ import os
 # 查询开始时间
 STUDYDONEDATE = datetime.datetime.now()
 
-#
+# 修改内容：
+# 保存log
+# 参数保存
+
 
 # 查询数据库
 def selSql(selStr):
