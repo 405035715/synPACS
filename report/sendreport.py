@@ -84,8 +84,10 @@ def selSql(selStr):
     connection.close()
     return sqlresult
 
-
+# 插入到本地db
 def inserttomysql(startdate, enddate):
+    global STUDYDONEDATE
+
     selstr = 'select PATIENTSALIAS,PATIENTSID,PATIENTSSEX,PATIENTSDOB,STUDIESINSTUID,STUDIESDONEDATE,STUDIESDONETIME,ADMISSIONID,STUDIESMODALITIES,RESULTSBODIESALIAS,RESULTSEXAMINEALIAS,ACCESSIONNUMBER,REPORTSSTATUS,REPORTSDOCTORALIAS,REPORTSDATE,REPORTSTIME,RECORDSDOCTOR,RECORDSDOCTORALIAS,RECORDSDATE,RECORDSTIME,APPROVEDOCTOR,APPROVEDOCTORALIAS,APPROVEDATE,APPROVETIME,REPORTSCONCLUSION,REPORTSEVIDENCES,REPORTSTECHNOLOGIES,REPORTSCOMMENTS  from VHIS_JDYX WHERE   STUDIESDONEDATE>=\'%s\' and STUDIESDONEDATE< \'%s\' order by StudiesDoneTime' % (startdate, enddate)
     reportlistsql = selSql(selstr)
     print(reportlistsql[0])
@@ -109,6 +111,7 @@ def inserttomysql(startdate, enddate):
     # cursor.close()
     # cnx.close()
 
+#
 def updatemysql(sqlstr, values):
     # update_old_salary = (
     #     "UPDATE salaries SET to_date = %s "
@@ -125,7 +128,7 @@ def updatemysql(sqlstr, values):
 
 
 
-#
+
 # def selsqlfrommysql():
 #     # 查询数据库
 #     try:
@@ -151,13 +154,13 @@ def updatemysql(sqlstr, values):
 #         cnx.close()
 
 
+
 if __name__ == "__main__":
-    os.environ['nls_lang'] = 'AMERICAN_AMERICA.AL32UTF8' #解决CX_ORACLE查询出错的编码问题,
+    os.environ['nls_lang'] = 'AMERICAN_AMERICA.AL32UTF8' # 解决CX_ORACLE查询出错的编码问题,
     submitreport()
 
     # selsqlfrommysql()
-    # a = none
-    # print(type(a))
+
     # currentdate = datetime.datetime.strptime('20160401', '%Y%m%d')    #发送开始时间
     # enddate = datetime.datetime.strptime('20160901', '%Y%m%d')  #结束时间
     # nextdate = currentdate + datetime.timedelta(days=1)
@@ -177,4 +180,7 @@ if __name__ == "__main__":
 
     selstr =' SELECT * FROM VHIS_JDYX  where ACCESSIONNUMBER =\'CT160295\' '
     selSql(selstr)
+
+
+
 

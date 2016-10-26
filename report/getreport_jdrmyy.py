@@ -12,7 +12,7 @@ import urllib.parse
 import os
 import mysql.connector
 
-#1.未上传01-01的除ct,cr以外的影像,.1月 14/24/29/30 2月5,10,24  3月1,2,3
+#1.未上传01-01的除ct,cr以外的影像,.   3月1,2,3   ４月９
 #20150218之前的压缩时jpeg压缩,没有转jpeg2000
 #已上传 :20150101/ 20150308
 
@@ -21,9 +21,9 @@ import mysql.connector
 '''
 
 # 查询开始时间
-STUDYDONEDATE = datetime.datetime.strptime('2015-03-31 00:00:00', '%Y-%m-%d %H:%M:%S')
+STUDYDONEDATE = datetime.datetime.strptime('2015-06-04 00:00:00', '%Y-%m-%d %H:%M:%S')
 #查询结束时间
-STUDYENDDATE = datetime.datetime.strptime('2015-04-10 00:00:00', '%Y-%m-%d %H:%M:%S')
+STUDYENDDATE = datetime.datetime.strptime('2015-06-15 00:00:00', '%Y-%m-%d %H:%M:%S')
 
 #获取病人列表
 # 获取报告sql语句
@@ -136,7 +136,7 @@ def getimages(accessionnumber):
 '''
 def getreport():
     global  STUDYDONEDATE
-    selstr = 'select STUDIESINSTUID,STUDIESMODALITIES,PATIENTSALIAS,ACCESSIONNUMBER,STUDIESDONEDATE,STUDIESDONETIME,RESULTSEXAMINEALIAS,REPORTSDOCTORALIAS,REPORTSEVIDENCES,REPORTSCONCLUSION,APPROVEDATE,APPROVETIME,RECORDSDOCTORALIAS,PATIENTSSEX,PATIENTSDOB,PATIENTSID,REPORTSDATE,REPORTSTIME  from VHIS_JDYX WHERE  REPORTSSTATUS = 100 and STUDIESDONEDATE>=\'%s\' and STUDIESDONEDATE< \'%s\' order by StudiesDoneTime' % (STUDYDONEDATE.strftime('%Y%m%d'), (STUDYDONEDATE + datetime.timedelta(hours=24)).strftime('%Y%m%d'))
+    selstr = 'select STUDIESINSTUID,STUDIESMODALITIES,PATIENTSALIAS,ACCESSIONNUMBER,STUDIESDONEDATE,STUDIESDONETIME,RESULTSEXAMINEALIAS,REPORTSDOCTORALIAS,REPORTSEVIDENCES,REPORTSCONCLUSION,APPROVEDATE,APPROVETIME,APPROVEDOCTORALIAS,PATIENTSSEX,PATIENTSDOB,PATIENTSID,REPORTSDATE,REPORTSTIME  from VHIS_JDYX WHERE  REPORTSSTATUS = 100 and STUDIESDONEDATE>=\'%s\' and STUDIESDONEDATE< \'%s\' order by StudiesDoneTime' % (STUDYDONEDATE.strftime('%Y%m%d'), (STUDYDONEDATE + datetime.timedelta(hours=24)).strftime('%Y%m%d'))
     reportlistsql = selSql(selstr)
     reportdic = {}
     for temp in reportlistsql:
@@ -303,7 +303,7 @@ if __name__ == "__main__":
                     studyuid = m1.hexdigest()  # md5 加密
                     report = reportdic[studyuid]  # 获取报告
                     print(report)
-                    time.sleep(3)
+                    # time.sleep(3)
                     submitreport(report)                 # 提交报告
                 if STUDYINDEX < len(STUDYLIST):
                     SOCKETCONTENT = ''
