@@ -10,6 +10,7 @@ import hashlib
 import urllib.request
 import urllib.parse
 import os
+import json
 
 # 可配置项目
 
@@ -19,6 +20,28 @@ STUDYDONEDATE = datetime.datetime.now()
 # 修改内容：
 # 保存log
 # 参数保存
+
+# 用json文件保存配置项
+def writeJson(studydonedate):
+    data = {
+        'STUDYDONEDATE': studydonedate,
+    }
+    json_str = json.dumps(data)
+    # Writing JSON data
+    with open('getreport_lszxyy_conf.json', 'w') as f:
+        json.dump(json_str, f)
+
+
+# 读json文件的配置项
+def readJson():
+    # Reading data back
+    with open('getreport_lszxyy_conf.json', 'r') as f:
+        data = json.load(f)
+    datadic = eval(data)
+    if 'studydonedate' in datadic.keys:
+        return  datadic['studydonedate']
+    else:
+        return -1
 
 
 # 查询数据库
@@ -72,6 +95,9 @@ def getreport():
     nowTime = datetime.datetime.now().strftime('%H%M%S')
     # 更新时间
     STUDYDONEDATE = datetime.datetime.now()
+    # 保存更新时间
+    writeJson(STUDYDONEDATE)
+
     # 没有处理24小时时间转换时的情况
     selstr  = 'select STUDIESINSTUID,STUDIESMODALITIES,PATIENTSALIAS,ACCESSIONNUMBER,STUDIESDONEDATE,STUDIESDONETIME,RESULTSEXAMINEALIAS,REPORTSDOCTORALIAS,REPORTSEVIDENCES,REPORTSCONCLUSION,APPROVEDATE,APPROVETIME,ApproveDoctorAlias,PATIENTSSEX,PATIENTSDOB,PATIENTSID,REPORTSDATE,REPORTSTIME  from VHIS_JDYX WHERE  REPORTSSTATUS = 100 and APPROVEDATE = \'%s\' and APPROVETIME >=  \'%s\' and APPROVETIME< \'%s\' order by StudiesDoneTime' % (preDate, preTime, nowTime)
     reportlistsql = selSql(selstr)
@@ -153,6 +179,10 @@ def submitreport(reports):
             # print(f.read().decode('utf-8'))
 
 if __name__ == '__main__':
+    # 如果配置项为空时，使用当前时间
+    resultstr = readJson()
+    if resultstr != -1:
+        STUDYDONEDATE = resultstr
     while True:
         submitreport(getreport())
         time.sleep(60*2)  # 2分钟更新一次
